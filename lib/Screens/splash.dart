@@ -17,19 +17,23 @@ class _SplashScreenState extends State<SplashScreen> {
         () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Onboarding()),
-            ));
+            )
+            );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    backgroundColor:Colors.deepOrangeAccent,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
             width: double.infinity,
             child: Image.asset('assets/logo.png'),
+            
           ),
+          
         ),
       ),
     );
