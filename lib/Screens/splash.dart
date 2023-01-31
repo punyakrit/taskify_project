@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskify_project/main.dart';
+import './onBoarding.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,11 +11,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // ignore: unnecessary_new
     new Future.delayed(
         const Duration(seconds: 5),
-        () => Navigator.push(
+        () => Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => hom()),
+              MaterialPageRoute(builder: (context) => Onboarding()),
             ));
   }
 
@@ -22,22 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          height: 48,
-          width: 333,
-          child: Image.asset('assets/logo.png'),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Container(
+            width: double.infinity,
+            child: Image.asset('assets/logo.png'),
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Next Screen'),
       ),
     );
   }
