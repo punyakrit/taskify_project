@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'splash.dart';
 
 
 void main() {
@@ -13,10 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    title: 'Flutter Demo',
+    title: 'Taskify',
     theme: ThemeData(
+    
     ),
-      home: hom(),
+      home: SplashScreen(),
     );
   }
 }
