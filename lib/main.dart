@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
     title: 'Taskify',
     theme: ThemeData(
+
     
     ),
       home: SplashScreen(),
