@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
-import 'package:taskify_project/main.dart';
 import 'Login/login.dart';
 
 class Onboarding extends StatelessWidget {
@@ -58,7 +57,7 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  state.isLastPage ? "Done" : "Next",
+                  state.isLastPage ? "Register" : "Next",
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
