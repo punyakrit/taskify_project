@@ -7,65 +7,71 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: OnBoard(
-        pageController: _pageController,
-        // Either Provide onSkip Callback or skipButton Widget to handle skip state
-        
-        onBoardData: onBoardData,
-        titleStyles: const TextStyle(
-          color: Colors.deepOrange,
-          fontSize: 25,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 0.15,
-        ),
-        // ignore: prefer_const_constructors
-        descriptionStyles: TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
-        pageIndicatorStyle: const PageIndicatorStyle(
-          width: 100,
-          inactiveColor: Colors.deepOrangeAccent,
-          activeColor: Colors.deepOrange,
-          inactiveSize: Size(8, 8),
-          activeSize: Size(12, 12),
-        ),
-        // Either Provide onSkip Callback or skipButton Widget to handle skip state
-        skipButton: TextButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>login()));
-          },
-          child: const Text(
-            "Skip",
-            style: TextStyle(color: Colors.deepOrangeAccent),
+      body: Container(
+      margin:  const EdgeInsets.only(left: 10, right: 10),
+        child: OnBoard(
+          pageController: _pageController,
+          // Either Provide onSkip Callback or skipButton Widget to handle skip state
+          
+          onBoardData: onBoardData,
+          titleStyles: const TextStyle(
+            color: Colors.deepOrange,
+            fontSize: 25,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 0.15,
           ),
-        ),
-        // Either Provide onDone Callback or nextButton Widget to handle done state
-        nextButton: OnBoardConsumer(
-          builder: (context, ref, child) {
-            final state = ref.watch(onBoardStateProvider);
-            return InkWell(
-              onTap: () => _onNextTap(context, state),
-              child: Container(
-                width: 230,
-                height: 50,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  gradient: const LinearGradient(
-                    colors: [Colors.redAccent, Colors.deepOrangeAccent],
+          // ignore: prefer_const_constructors
+          descriptionStyles: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+          ),
+          pageIndicatorStyle: const PageIndicatorStyle(
+            width: 100,
+            inactiveColor: Colors.deepOrangeAccent,
+            activeColor: Colors.deepOrange,
+            inactiveSize: Size(8, 8),
+            activeSize: Size(12, 12),
+          ),
+          // Either Provide onSkip Callback or skipButton Widget to handle skip state
+        
+          skipButton: TextButton(
+        
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>login()));
+            },
+            child: const Text(
+              "Skip",
+              style: TextStyle(color: Colors.deepOrangeAccent),
+            ),
+          ),
+          // Either Provide onDone Callback or nextButton Widget to handle done state
+          nextButton: OnBoardConsumer(
+            builder: (context, ref, child) {
+              final state = ref.watch(onBoardStateProvider);
+              return InkWell(
+                onTap: () => _onNextTap(context, state),
+                child: Container(
+                  width: 230,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    gradient: const LinearGradient(
+                      colors: [Colors.redAccent, Colors.deepOrangeAccent],
+                    ),
+                  ),
+                  child: Text(
+                    state.isLastPage ? "Register" : "Next",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                child: Text(
-                  state.isLastPage ? "Register" : "Next",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            );
-          },
+              );
+            },
+          ),
+          
         ),
       ),
     );
