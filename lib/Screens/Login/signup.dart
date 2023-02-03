@@ -14,6 +14,7 @@ class signup extends StatelessWidget {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.width;
 
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(children: [

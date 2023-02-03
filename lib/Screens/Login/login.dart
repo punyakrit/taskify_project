@@ -13,6 +13,23 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  List<String> _texts = ["Hello","Namaste","Hola", "Bonjour","Hallo","Ciao","Salve"];
+  int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateText();
+  }
+
+  void _updateText() async {
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      _index = (_index + 1)% _texts.length;
+    });
+    _updateText();
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -21,11 +38,11 @@ class _loginState extends State<login> {
       body: Column(children: [
         SizedBox(height: 95),
         Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 70),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 70),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              'Hello',
+              _texts[_index],
               style: TextStyle(
                   fontSize: 70,
                   fontWeight: FontWeight.bold,
