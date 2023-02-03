@@ -37,7 +37,7 @@ class Onboarding extends StatelessWidget {
           skipButton: TextButton(
         
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>login()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
             },
             child: const Text(
               "Skip",
@@ -85,7 +85,7 @@ class Onboarding extends StatelessWidget {
         curve: Curves.easeInOutSine,
       );
     } else { 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>login()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
 
       // print("nextButton pressed");
     }

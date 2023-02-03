@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import '../../main.dart';
 
-class signup extends StatelessWidget {
-  const signup({super.key});
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,6 @@ class signup extends StatelessWidget {
 
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.width;
-
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -144,7 +143,7 @@ class signup extends StatelessWidget {
             height: 50,
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => hom()));
+                  .push(MaterialPageRoute(builder: (context) => HomePage()));
             },
             child: Text(
               "SignUp",
@@ -155,7 +154,9 @@ class signup extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         RichText(
             text: TextSpan(
                 recognizer: TapGestureRecognizer()..onTap = () => Get.back(),

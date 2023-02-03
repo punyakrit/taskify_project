@@ -5,15 +5,23 @@ import 'package:taskify_project/Screens/Login/signup.dart';
 
 import '../../main.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
-  List<String> _texts = ["Hello","Namaste","Hola", "Bonjour","Hallo","Ciao","Salve"];
+class _LoginState extends State<Login> {
+  List<String> _texts = [
+    "Hello",
+    "Namaste",
+    "Hola",
+    "Bonjour",
+    "Hallo",
+    "Ciao",
+    "Salve"
+  ];
   int _index = 0;
 
   @override
@@ -25,7 +33,7 @@ class _loginState extends State<login> {
   void _updateText() async {
     await Future.delayed(Duration(seconds: 3));
     setState(() {
-      _index = (_index + 1)% _texts.length;
+      _index = (_index + 1) % _texts.length;
     });
     _updateText();
   }
@@ -144,7 +152,7 @@ class _loginState extends State<login> {
             height: 60,
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => hom()));
+                  .push(MaterialPageRoute(builder: (context) => HomePage()));
             },
             child: Text(
               "Login",
@@ -169,7 +177,7 @@ class _loginState extends State<login> {
                       color: Color.fromARGB(255, 255, 109, 64),
                       fontWeight: FontWeight.bold),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => Get.to(() => signup())),
+                    ..onTap = () => Get.to(() => SignUp())),
             ]))
       ]),
     );
