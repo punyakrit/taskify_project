@@ -14,32 +14,18 @@ Future main() async {
   runApp(const MyApp());
 }
 
+final navigatorkey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: navigatorkey,
       title: 'Taskify',
       theme: ThemeData(),
       home: SplashScreen(),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Text(
-        'demo screen',
-        style: TextStyle(
-          fontSize: 44,
-        ),
-      ),
-    ));
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../main.dart';
+import '../home.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});

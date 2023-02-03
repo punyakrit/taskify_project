@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
 import 'Login/login.dart';
+import 'home.dart';
 
 class Onboarding extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -8,11 +10,11 @@ class Onboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-      margin:  const EdgeInsets.only(left: 10, right: 10),
+        margin: const EdgeInsets.only(left: 10, right: 10),
         child: OnBoard(
           pageController: _pageController,
           // Either Provide onSkip Callback or skipButton Widget to handle skip state
-          
+
           onBoardData: onBoardData,
           titleStyles: const TextStyle(
             color: Colors.deepOrange,
@@ -33,16 +35,10 @@ class Onboarding extends StatelessWidget {
             activeSize: Size(12, 12),
           ),
           // Either Provide onSkip Callback or skipButton Widget to handle skip state
-        
+
           skipButton: TextButton(
-        
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
-            },
-            child: const Text(
-              "Skip",
-              style: TextStyle(color: Colors.deepOrangeAccent),
-            ),
+            onPressed: () {},
+            child: const Text(""),
           ),
           // Either Provide onDone Callback or nextButton Widget to handle done state
           nextButton: OnBoardConsumer(
@@ -61,7 +57,7 @@ class Onboarding extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    state.isLastPage ? "Register" : "Next",
+                    state.isLastPage ? "Welcome Back!" : "Next",
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -71,21 +67,33 @@ class Onboarding extends StatelessWidget {
               );
             },
           ),
-          
         ),
       ),
     );
   }
 
-  void _onNextTap(BuildContext context ,OnBoardState onBoardState) {
+  void _onNextTap(BuildContext context, OnBoardState onBoardState) {
     if (!onBoardState.isLastPage) {
       _pageController.animateToPage(
         onBoardState.page + 1,
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOutSine,
       );
-    } else { 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Something went Wront!'));
+                } else if (snapshot.hasData) {
+                  return HomePage();
+                } else {
+                  return Login();
+                }
+              })));
 
       // print("nextButton pressed");
     }

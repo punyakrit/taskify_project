@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
   List<String> _texts = [
     "Hello",
     "Namaste",
@@ -74,6 +86,7 @@ class _LoginState extends State<Login> {
                         color: Colors.deepOrangeAccent.withOpacity(0.1))
                   ]),
               child: TextFormField(
+                controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                     hintText: 'Enter Email',
@@ -104,6 +117,7 @@ class _LoginState extends State<Login> {
                         color: Colors.deepOrangeAccent.withOpacity(0.1))
                   ]),
               child: TextFormField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     hintText: 'Enter Password',
@@ -150,10 +164,7 @@ class _LoginState extends State<Login> {
           child: MaterialButton(
             minWidth: 230,
             height: 60,
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomePage()));
-            },
+            onPressed: signin,
             child: Text(
               "Login",
               style: const TextStyle(
@@ -182,4 +193,20 @@ class _LoginState extends State<Login> {
       ]),
     );
   }
+
+  Future signin() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      
+    }
+Navigator.of(context).pop();  }
 }
