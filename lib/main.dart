@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskify_project/Screens/Login/signup.dart';
 import 'Screens/splash.dart';
 
 void main() {
