@@ -1,42 +1,71 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskify_project/Screens/Login/signup.dart';
 
 import '../../main.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class signup extends StatelessWidget {
+  const signup({super.key});
 
-  @override
-  State<login> createState() => _loginState();
-}
-
-class _loginState extends State<login> {
   @override
   Widget build(BuildContext context) {
+    List images = ["go.png"];
+
     double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(children: [
-        SizedBox(height: 95),
+        SizedBox(height: 35),
         Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 70),
+          child: Column(
+            children: [
+              SizedBox(
+                height: h * 0.18,
+              ),
+              CircleAvatar(
+                radius: 60,
+                backgroundImage: AssetImage("assets/avatar.jpg"),
+              )
+            ],
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Hello',
-              style: TextStyle(
-                  fontSize: 70,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFFF5722)),
+            SizedBox(height: 45),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                        spreadRadius: 7,
+                        blurRadius: 10,
+                        offset: Offset(1, 1),
+                        color: Colors.deepOrangeAccent.withOpacity(0.1))
+                  ]),
+              child: TextFormField(
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
+                    hintText: 'Enter Name',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.deepOrange,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 1.0))),
+              ),
             ),
-            Text(
-              'Sign into your Account',
-              style: TextStyle(
-                  fontSize: 20, color: Color.fromARGB(154, 255, 109, 64)),
-            ),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -96,25 +125,12 @@ class _loginState extends State<login> {
                             BorderSide(color: Colors.white, width: 1.0))),
               ),
             ),
-            SizedBox(height: 25),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(),
-                ),
-                Text(
-                  'Forgot your Password?',
-                  style: TextStyle(
-                      fontSize: 15, color: Color.fromARGB(96, 255, 109, 64)),
-                ),
-              ],
-            ),
           ]),
         ),
-        SizedBox(height: 70),
+        SizedBox(height: 45),
         Container(
           width: 230,
-          height: 60,
+          height: 50,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
@@ -124,13 +140,13 @@ class _loginState extends State<login> {
           ),
           child: MaterialButton(
             minWidth: 230,
-            height: 60,
+            height: 50,
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => hom()));
             },
             child: Text(
-              "Login",
+              "SignUp",
               style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -138,22 +154,31 @@ class _loginState extends State<login> {
             ),
           ),
         ),
-        SizedBox(height: w * 0.2),
+        SizedBox(height: 10,),
         RichText(
             text: TextSpan(
-                text: "Don't have an account?",
-                style: TextStyle(
-                    fontSize: 20, color: Color.fromARGB(255, 255, 109, 64)),
-                children: [
-              TextSpan(
-                  text: " Create",
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 255, 109, 64),
-                      fontWeight: FontWeight.bold),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => Get.to(() => signup())),
-            ]))
+                recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
+                text: "Have an account?",
+                style: TextStyle(fontSize: 17, color: Colors.deepOrange))),
+        SizedBox(height: w * 0.08),
+        RichText(
+            text: TextSpan(
+          text: "SignUp using on the following method",
+          style:
+              TextStyle(fontSize: 16, color: Color.fromARGB(165, 255, 109, 64)),
+        )),
+        Wrap(
+          children: List<Widget>.generate(1, (index) {
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage: AssetImage("assets/" + images[index]),
+                backgroundColor: Colors.white,
+              ),
+            );
+          }),
+        )
       ]),
     );
   }
