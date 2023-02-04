@@ -1,12 +1,16 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taskify_project/Screens/Login/forgotPassword.dart';
 import 'package:taskify_project/Screens/Login/signup.dart';
 
 import '../../main.dart';
 
 class Login extends StatefulWidget {
+  // final VoidCallback onClickedSignUp;
+
   const Login({super.key});
 
   @override
@@ -14,6 +18,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -86,6 +92,11 @@ class _LoginState extends State<Login> {
                         color: Colors.deepOrangeAccent.withOpacity(0.1))
                   ]),
               child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? '          Enter a valid email'
+                        : null,
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -117,6 +128,10 @@ class _LoginState extends State<Login> {
                         color: Colors.deepOrangeAccent.withOpacity(0.1))
                   ]),
               child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => value != null && value.length < 6
+                    ? '          Enter min 6 characters'
+                    : null,
                 controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -138,19 +153,22 @@ class _LoginState extends State<Login> {
             SizedBox(height: 25),
             Row(
               children: [
-                Expanded(
-                  child: Container(),
-                ),
-                Text(
-                  'Forgot your Password?',
-                  style: TextStyle(
-                      fontSize: 15, color: Color.fromARGB(96, 255, 109, 64)),
+                GestureDetector(
+                  child: Text(
+                    'Forgot your Password?',
+                    style: TextStyle(
+                        fontSize: 15, color: Color.fromARGB(96, 255, 109, 64)),
+                  ),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ForgotPass()));
+                  },
                 ),
               ],
             ),
           ]),
         ),
-        SizedBox(height: 70),
+        SizedBox(height: 40),
         Container(
           width: 230,
           height: 60,
@@ -179,22 +197,25 @@ class _LoginState extends State<Login> {
             text: TextSpan(
                 text: "Don't have an account?",
                 style: TextStyle(
-                    fontSize: 20, color: Color.fromARGB(255, 255, 109, 64)),
+                    fontSize: 17, color: Color.fromARGB(255, 255, 109, 64)),
                 children: [
               TextSpan(
-                  text: " Create",
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 255, 109, 64),
-                      fontWeight: FontWeight.bold),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => Get.to(() => SignUp())),
-            ]))
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => Get.to(() => SignUp()),
+                text: " Create Account",
+                style: TextStyle(
+                    fontSize: 17,
+                    color: Color.fromARGB(255, 255, 109, 64),
+                    fontWeight: FontWeight.bold),
+              ),
+            ])),
       ]),
     );
   }
 
   Future signin() async {
+    // final isValid = formKey.currentState!.validate();
+    // if (!isValid) return;
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -205,8 +226,11 @@ class _LoginState extends State<Login> {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
+      var snackbar = Get.snackbar("Error", "Something went Wrong. Try again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orangeAccent.withOpacity(0.5));
       print(e);
-      
     }
-Navigator.of(context).pop();  }
+    Navigator.of(context).pop();
+  }
 }

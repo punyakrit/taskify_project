@@ -80,7 +80,7 @@ class Onboarding extends StatelessWidget {
         curve: Curves.easeInOutSine,
       );
     } else {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
