@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -24,18 +25,20 @@ class _SignUpState extends State<SignUp> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    List images = ["go.png"];
+    // List images = ["go.png"];
 
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.width;
@@ -45,7 +48,7 @@ class _SignUpState extends State<SignUp> {
       body: Form(
         key: formKey,
         child: Column(children: [
-          SizedBox(height: 70),
+          SizedBox(height: 50),
           Container(
             child: Column(
               children: [
@@ -63,7 +66,7 @@ class _SignUpState extends State<SignUp> {
             margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(height: 65),
+              SizedBox(height: 45),
               Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -75,7 +78,41 @@ class _SignUpState extends State<SignUp> {
                           offset: Offset(1, 1),
                           color: Colors.deepOrangeAccent.withOpacity(0.1))
                     ]),
-                
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => value != null && value.length < 3
+                      ? '          Enter a valid Name'
+                      : null,
+                  controller: nameController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: 'Enter Name',
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: Colors.deepOrange,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 1.0))),
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                          spreadRadius: 7,
+                          blurRadius: 10,
+                          offset: Offset(1, 1),
+                          color: Colors.deepOrangeAccent.withOpacity(0.1))
+                    ]),
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
@@ -171,25 +208,6 @@ class _SignUpState extends State<SignUp> {
                   recognizer: TapGestureRecognizer()..onTap = () => Get.back(),
                   text: "Have an account?",
                   style: TextStyle(fontSize: 17, color: Colors.deepOrange))),
-          SizedBox(height: w * 0.08),
-          RichText(
-              text: TextSpan(
-            text: "SignUp using on the following method",
-            style: TextStyle(
-                fontSize: 16, color: Color.fromARGB(165, 255, 109, 64)),
-          )),
-          Wrap(
-            children: List<Widget>.generate(1, (index) {
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/" + images[index]),
-                  backgroundColor: Colors.white,
-                ),
-              );
-            }),
-          )
         ]),
       ),
     );
@@ -206,18 +224,34 @@ class _SignUpState extends State<SignUp> {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
-          password: passwordController.text.trim());
+          password: passwordController.text.trim()).then((value) {
+          addUser(nameController.text.trim(),
+       emailController.text.trim(),
+          passwordController.text.trim());
+      }
+          )
+          ;
+
+      
+
       move_();
     } on FirebaseAuthException catch (e) {
-    
+      print(e);
       var snackbar = Get.snackbar("Error", "Something went Wrong. Try again",
-      
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.orangeAccent.withOpacity(0.5));
-      
     }
     Navigator.of(context).pop();
     Navigator.of(context).pop();
+  }
+
+  Future addUser(String name, String email, String password) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'name': name,
+      'email': email,
+      'password': password,
+    }
+    );
   }
 
   void move_() {

@@ -208,7 +208,9 @@ class _LoginState extends State<Login> {
                     color: Color.fromARGB(255, 255, 109, 64),
                     fontWeight: FontWeight.bold),
               ),
-            ])),
+            ]
+            )
+            ),
       ]),
     );
   }
