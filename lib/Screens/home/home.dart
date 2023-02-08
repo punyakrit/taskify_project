@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:taskify_project/Screens/home/description.dart';
 
 import 'add_task.dart';
 
@@ -20,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   var uid;
   @override
   void initState() {
-     uid = getuid();
+    uid = getuid();
     super.initState();
   }
 
@@ -57,14 +59,10 @@ class _HomePageState extends State<HomePage> {
           SizedBox(width: 10),
           RichText(
               text: TextSpan(
-                  text: "Hello,",
-                  style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                 
-              )
-              ),
+            text: "Hello,",
+            style: TextStyle(
+                fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+          )),
         ]),
         actions: [
           Container(
@@ -83,6 +81,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
+        padding: EdgeInsets.all(15),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: StreamBuilder(
@@ -95,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                  height: 100,
+                  height: 90,
                   child: Center(child: const CircularProgressIndicator()),
                 );
               }
@@ -104,14 +103,73 @@ class _HomePageState extends State<HomePage> {
               return ListView.builder(
                 itemCount: doc.length,
                 itemBuilder: (context, index) {
+                  var time = (doc[index]['timestamp'] as Timestamp).toDate();
                   print("working");
-                  return Container(
-                    child: Column(children: [
-                      Text(
-                        doc[index]['title'],
-                        style: TextStyle(fontSize: 20, color: Colors.black),
+
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: 
+                          (context)=> Description
+                          (
+                          title: doc[index]['title'], 
+                          description: doc[index]['description'])));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.deepOrangeAccent.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 3,
+                                blurRadius: 10,
+                                offset: Offset(1, 1),
+                                color: Colors.black.withOpacity(0.2))
+                          ]),
+                      height: 90,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Text(
+                                    doc[index]['title'],
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Text(
+                                      DateFormat.MMMd().add_jm().format(time)),
+                                )
+                              ]),
+                          Container(
+                            child: IconButton(
+                              onPressed: () async {
+                                await FirebaseFirestore.instance
+                                    .collection('tasks')
+                                    .doc(uid)
+                                    .collection('mytasks')
+                                    .doc(doc[index]['time'])
+                                    .delete();
+                              },
+                              icon: Icon(Icons.delete),
+                            ),
+                          )
+                        ],
                       ),
-                    ]),
+                    ),
                   );
                 },
               );

@@ -30,7 +30,8 @@ class _AddTaskState extends State<AddTask> {
         .collection('tasks')
         .doc(userid)
         .collection('mytasks')
-        .add({
+        .doc(time.toString())
+        .set({
       'title': titleController.text,
       'description': descriptionController.text,
       'time': time.toString(),
