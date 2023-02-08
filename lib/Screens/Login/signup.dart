@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../main.dart';
-import '../home.dart';
+import '../home/home.dart';
 
 class SignUp extends StatefulWidget {
   // final Function() onClickedSignIn;

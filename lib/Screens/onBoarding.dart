@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
 import 'Login/login.dart';
-import 'home.dart';
+import 'home/home.dart';
 
 class Onboarding extends StatelessWidget {
   final PageController _pageController = PageController();
