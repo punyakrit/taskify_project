@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:fancy_snackbar/fancy_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -227,10 +228,28 @@ class _LoginState extends State<Login> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
+          // ignore: use_build_context_synchronously
+          FancySnackbar.showSnackbar(
+  context,
+  snackBarType: FancySnackBarType.success,
+  title: "Login Successful",
+  message: "",
+  duration: 4,
+  
+);
     } on FirebaseAuthException catch (e) {
-      var snackbar = Get.snackbar("Error", "Something went Wrong. Try again",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.orangeAccent.withOpacity(0.5));
+      // var snackbar = Get.snackbar("Error", "Something went Wrong. Try again",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.orangeAccent.withOpacity(0.5));
+
+          FancySnackbar.showSnackbar(
+  context,
+  snackBarType: FancySnackBarType.error,
+  title: "Error",
+  message: "Something went Wrong. Try again",
+  duration: 4,
+  
+);
       print(e);
     }
     Navigator.of(context).pop();

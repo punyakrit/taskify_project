@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_snackbar/fancy_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +19,6 @@ class _AddTaskState extends State<AddTask> {
   TextEditingController descriptionController = TextEditingController();
   var time = DateTime.now();
   final FirebaseAuth auth = FirebaseAuth.instance;
- 
- 
-
-
-
-
 
   Future addTaskToFirebase() async {
     final user = await auth.currentUser!;
@@ -37,9 +34,29 @@ class _AddTaskState extends State<AddTask> {
       'time': time.toString(),
       'timestamp': time
     });
-    var snackbar = Get.snackbar("YAY!", "Task Updated",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.orangeAccent.withOpacity(0.5));
+    
+    // ignore: use_build_context_synchronously
+    FancySnackbar.showSnackbar(
+  context,
+  snackBarType: FancySnackBarType.success,
+  title: "YAY!",
+  message: "Task Updated Successfully",
+  duration: 3,
+  onCloseEvent: () {   
+     Navigator.pop(context);
+},
+);
+               
+              
+          
+    // var snackbar = Get.snackbar("YAY!", "Task Updated",
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.orangeAccent.withOpacity(0.5));
+    // ignore: unnecessary_new
+    // new Future.delayed(const Duration(seconds: 1), () {
+    //   Navigator.pop(context);
+    // }
+    // );
   }
 
   @override

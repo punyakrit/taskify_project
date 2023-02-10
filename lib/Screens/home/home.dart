@@ -92,88 +92,92 @@ class _HomePageState extends State<HomePage> {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                  height: 90,
-                  child: Center(child: const CircularProgressIndicator()),
+            
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                    height: 90,
+                    child: Center(child: const CircularProgressIndicator()),
+                  );
+                }
+
+                final doc = snapshot.data!.docs;
+                return ListView.builder(
+                  itemCount: doc.length,
+                  itemBuilder: (context, index) {
+                    var time = (doc[index]['timestamp'] as Timestamp).toDate();
+                    print("working");
+
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Description(
+                                    title: doc[index]['title'],
+                                    description: doc[index]['description'])));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.deepOrangeAccent.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 3,
+                                  blurRadius: 10,
+                                  offset: Offset(1, 1),
+                                  color: Colors.black.withOpacity(0.2))
+                            ]),
+                        height: 90,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 20),
+                                    child: Text(
+                                      doc[index]['title'],
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 20),
+                                    child: Text(DateFormat.MMMd()
+                                        .add_jm()
+                                        .format(time)),
+                                  )
+                                ]),
+                            Container(
+                              child: IconButton(
+                                onPressed: () async {
+                                  await FirebaseFirestore.instance
+                                      .collection('tasks')
+                                      .doc(uid)
+                                      .collection('mytasks')
+                                      .doc(doc[index]['time'])
+                                      .delete();
+                                },
+                                icon: Icon(Icons.delete),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 );
               }
-
-              final doc = snapshot.data!.docs;
-              return ListView.builder(
-                itemCount: doc.length,
-                itemBuilder: (context, index) {
-                  var time = (doc[index]['timestamp'] as Timestamp).toDate();
-                  print("working");
-
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: 
-                          (context)=> Description
-                          (
-                          title: doc[index]['title'], 
-                          description: doc[index]['description'])));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Colors.deepOrangeAccent.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 3,
-                                blurRadius: 10,
-                                offset: Offset(1, 1),
-                                color: Colors.black.withOpacity(0.2))
-                          ]),
-                      height: 90,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                    doc[index]['title'],
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                      DateFormat.MMMd().add_jm().format(time)),
-                                )
-                              ]),
-                          Container(
-                            child: IconButton(
-                              onPressed: () async {
-                                await FirebaseFirestore.instance
-                                    .collection('tasks')
-                                    .doc(uid)
-                                    .collection('mytasks')
-                                    .doc(doc[index]['time'])
-                                    .delete();
-                              },
-                              icon: Icon(Icons.delete),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-            }),
+            // }
+            ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

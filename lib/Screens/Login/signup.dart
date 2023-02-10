@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:fancy_snackbar/fancy_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -228,6 +229,14 @@ class _SignUpState extends State<SignUp> {
           addUser(nameController.text.trim(),
        emailController.text.trim(),
           passwordController.text.trim());
+          FancySnackbar.showSnackbar(
+  context,
+  snackBarType: FancySnackBarType.success,
+  title: "Account Created",
+  message: "",
+  duration: 4,
+  
+);
       }
           )
           ;
@@ -237,9 +246,15 @@ class _SignUpState extends State<SignUp> {
       move_();
     } on FirebaseAuthException catch (e) {
       print(e);
-      var snackbar = Get.snackbar("Error", "Something went Wrong. Try again",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.orangeAccent.withOpacity(0.5));
+      FancySnackbar.showSnackbar(
+  context,
+  snackBarType: FancySnackBarType.error,
+  title: "Error",
+  message: "Something went Wrong. Try again",
+  duration: 4,
+  
+  
+);
     }
     Navigator.of(context).pop();
     Navigator.of(context).pop();
