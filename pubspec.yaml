@@ -45,7 +45,6 @@ dependencies:
   fancy_snackbar:
     git:
       url: https://github.com/MR0100/fancy_snackbar.git
-  lottie: ^2.2.0
 
 
 dev_dependencies:

@@ -44,32 +44,16 @@ class _HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(35),
                 bottomRight: Radius.circular(35))),
-        toolbarHeight: 140,
-        backgroundColor: Colors.deepOrange.withOpacity(0.8),
-        elevation: 30,
+        toolbarHeight: 120,
+        backgroundColor: Colors.white,
+        elevation: 0,
         title: Row(children: [
-          Container(
-          
-            height: 70,
-            width: 70,
-            margin: EdgeInsets.only(left: 7),
-            
-            child:  InkWell(
-            
-              child: const CircleAvatar(
-              
-                  
-                    backgroundImage: AssetImage(
-                    "assets/avatar.jpg"),
-                  ),
-            )
-          ),
           SizedBox(width: 10),
           RichText(
               text: TextSpan(
-            text: "Hello,",
+            text: "All Task's",
             style: TextStyle(
-                fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
           )),
         ]),
         actions: [
@@ -78,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             child: IconButton(
               icon: Icon(
                 Icons.login,
-                color: Colors.white,
+                color: Colors.black,
                 size: 40,
               ),
               onPressed: () {
@@ -121,9 +105,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => Description(
                                   title: doc[index]['title'],
-                                  description: doc[index]['description'])
-                                  )
-                                  );
+                                  description: doc[index]['description'])));
                     },
                     child: Container(
                       margin: EdgeInsets.all(10),
@@ -145,7 +127,6 @@ class _HomePageState extends State<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                              
                                 Container(
                                   margin: EdgeInsets.only(left: 20),
                                   child: Text(
