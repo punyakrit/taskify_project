@@ -9,6 +9,7 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    backgroundColor: Colors.white,
       body: Container(
         margin: const EdgeInsets.only(left: 10, right: 10),
         child: OnBoard(
@@ -23,6 +24,7 @@ class Onboarding extends StatelessWidget {
             letterSpacing: 0.15,
           ),
           // ignore: prefer_const_constructors
+      
           descriptionStyles: TextStyle(
             fontSize: 14,
             color: Colors.grey,
@@ -105,18 +107,19 @@ final List<OnBoardModel> onBoardData = [
     title: "Remember Daily tasks",
     description:
         "The app provide a platform where you don't need to remember your everyday tasks",
-    imgUrl: "assets/slide1.png",
+    imgUrl: "assets/gif.gif"
+    
   ),
   const OnBoardModel(
     title: "Track Progress",
     description:
         "You can easily track your daily progress and perform your tasks efficiently",
-    imgUrl: 'assets/slide2.png',
+    imgUrl: 'assets/gif2.gif',
   ),
   const OnBoardModel(
     title: "Get Notified Instantly",
     description:
         "You get notifications of your task and track your daily work on this platform",
-    imgUrl: 'assets/slide3.png',
+    imgUrl: 'assets/gif3.gif',
   ),
 ];

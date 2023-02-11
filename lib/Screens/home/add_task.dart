@@ -15,8 +15,18 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  final formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+
+    super.dispose();
+  }
+
   var time = DateTime.now();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -34,29 +44,22 @@ class _AddTaskState extends State<AddTask> {
       'time': time.toString(),
       'timestamp': time
     });
-    
+
     // ignore: use_build_context_synchronously
     FancySnackbar.showSnackbar(
-  context,
-  snackBarType: FancySnackBarType.success,
-  title: "YAY!",
-  message: "Task Updated Successfully",
-  duration: 3,
-  onCloseEvent: () {   
-     Navigator.pop(context);
-},
-);
-               
-              
-          
-    // var snackbar = Get.snackbar("YAY!", "Task Updated",
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     backgroundColor: Colors.orangeAccent.withOpacity(0.5));
-    // ignore: unnecessary_new
-    // new Future.delayed(const Duration(seconds: 1), () {
-    //   Navigator.pop(context);
-    // }
-    // );
+      context,
+      snackBarType: FancySnackBarType.success,
+      title: "YAY!",
+      message: "Task Updated Successfully",
+      duration: 4,
+    );
+    new Future.delayed(const Duration(seconds: 1), () {
+      Navigator.pop(context);
+    }
+    );
+    
+
+    
   }
 
   @override
@@ -81,6 +84,7 @@ class _AddTaskState extends State<AddTask> {
                       color: Colors.deepOrangeAccent.withOpacity(0.1))
                 ]),
             child: TextFormField(
+              
               controller: titleController,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -108,6 +112,8 @@ class _AddTaskState extends State<AddTask> {
                       color: Colors.deepOrangeAccent.withOpacity(0.1))
                 ]),
             child: TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              
               controller: descriptionController,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_snackbar/fancy_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -48,13 +49,20 @@ class _HomePageState extends State<HomePage> {
         elevation: 30,
         title: Row(children: [
           Container(
+          
             height: 70,
             width: 70,
             margin: EdgeInsets.only(left: 7),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(13),
-              child: Image.asset("assets/avatar.jpg"),
-            ),
+            
+            child:  InkWell(
+            
+              child: const CircleAvatar(
+              
+                  
+                    backgroundImage: AssetImage(
+                    "assets/avatar.jpg"),
+                  ),
+            )
           ),
           SizedBox(width: 10),
           RichText(
@@ -92,90 +100,97 @@ class _HomePageState extends State<HomePage> {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(
-                    height: 90,
-                    child: Center(child: const CircularProgressIndicator()),
-                  );
-                }
-
-                final doc = snapshot.data!.docs;
-                return ListView.builder(
-                  itemCount: doc.length,
-                  itemBuilder: (context, index) {
-                    var time = (doc[index]['timestamp'] as Timestamp).toDate();
-                    print("working");
-
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Description(
-                                    title: doc[index]['title'],
-                                    description: doc[index]['description'])));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.deepOrangeAccent.withOpacity(0.7),
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                  offset: Offset(1, 1),
-                                  color: Colors.black.withOpacity(0.2))
-                            ]),
-                        height: 90,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 20),
-                                    child: Text(
-                                      doc[index]['title'],
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 20),
-                                    child: Text(DateFormat.MMMd()
-                                        .add_jm()
-                                        .format(time)),
-                                  )
-                                ]),
-                            Container(
-                              child: IconButton(
-                                onPressed: () async {
-                                  await FirebaseFirestore.instance
-                                      .collection('tasks')
-                                      .doc(uid)
-                                      .collection('mytasks')
-                                      .doc(doc[index]['time'])
-                                      .delete();
-                                },
-                                icon: Icon(Icons.delete),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  height: 90,
+                  child: Center(child: const CircularProgressIndicator()),
                 );
               }
+
+              final doc = snapshot.data!.docs;
+              return ListView.builder(
+                itemCount: doc.length,
+                itemBuilder: (context, index) {
+                  var time = (doc[index]['timestamp'] as Timestamp).toDate();
+                  print("working");
+
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Description(
+                                  title: doc[index]['title'],
+                                  description: doc[index]['description'])
+                                  )
+                                  );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.deepOrangeAccent.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 3,
+                                blurRadius: 10,
+                                offset: Offset(1, 1),
+                                color: Colors.black.withOpacity(0.2))
+                          ]),
+                      height: 90,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                              
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Text(
+                                    doc[index]['title'],
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Text(
+                                      DateFormat.MMMd().add_jm().format(time)),
+                                )
+                              ]),
+                          Container(
+                            child: IconButton(
+                              onPressed: () async {
+                                await FirebaseFirestore.instance
+                                    .collection('tasks')
+                                    .doc(uid)
+                                    .collection('mytasks')
+                                    .doc(doc[index]['time'])
+                                    .delete();
+                                FancySnackbar.showSnackbar(
+                                  context,
+                                  snackBarType: FancySnackBarType.info,
+                                  title: "Task Deleted",
+                                  duration: 4,
+                                );
+                              },
+                              icon: Icon(Icons.delete),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
             // }
             ),
       ),
