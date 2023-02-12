@@ -1,4 +1,4 @@
-package com.example.taskify_project
+package com.anoop.taskify
 
 import io.flutter.embedding.android.FlutterActivity
 

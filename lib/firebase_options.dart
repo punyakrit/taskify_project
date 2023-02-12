@@ -45,7 +45,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAFZclufZ8252HUGc0ReoC-naQAgSn2mZU',
-    appId: '1:887469627935:web:3740d53a80236b697d932a',
+    appId: '1:887469627935:web:1c86c144155210667d932a',
     messagingSenderId: '887469627935',
     projectId: 'taskify-6b0cb',
     authDomain: 'taskify-6b0cb.firebaseapp.com',
@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBDoKW7NJRMvr5NuMDgdPI0GA9hzLpzdDs',
-    appId: '1:887469627935:android:1ac08e421259bd827d932a',
+    appId: '1:887469627935:android:28359c71854c2fdd7d932a',
     messagingSenderId: '887469627935',
     projectId: 'taskify-6b0cb',
     storageBucket: 'taskify-6b0cb.appspot.com',
@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBT-OFlOK_sv5awD5-IXHxfBhrjpR5sWgY',
-    appId: '1:887469627935:ios:42832c743d5526a07d932a',
+    appId: '1:887469627935:ios:90e0f5f43c42a4ad7d932a',
     messagingSenderId: '887469627935',
     projectId: 'taskify-6b0cb',
     storageBucket: 'taskify-6b0cb.appspot.com',
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBT-OFlOK_sv5awD5-IXHxfBhrjpR5sWgY',
-    appId: '1:887469627935:ios:42832c743d5526a07d932a',
+    appId: '1:887469627935:ios:90e0f5f43c42a4ad7d932a',
     messagingSenderId: '887469627935',
     projectId: 'taskify-6b0cb',
     storageBucket: 'taskify-6b0cb.appspot.com',

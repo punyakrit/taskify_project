@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.taskify_project">
+    package="com.anoop.taskify">
    <application
         android:label="Taskify"
         android:name="${applicationName}"

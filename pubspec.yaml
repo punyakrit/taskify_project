@@ -45,6 +45,8 @@ dependencies:
   fancy_snackbar:
     git:
       url: https://github.com/MR0100/fancy_snackbar.git
+  change_app_package_name: ^1.1.0
+
 
 
 dev_dependencies:
