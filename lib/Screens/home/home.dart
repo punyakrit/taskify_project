@@ -159,6 +159,8 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   snackBarType: FancySnackBarType.info,
                                   title: "Task Deleted",
+                                  message: "",
+                                  
                                   duration: 4,
                                 );
                               },
