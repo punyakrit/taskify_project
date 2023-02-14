@@ -206,7 +206,7 @@ class _LoginState extends State<Login> {
                 text: " Create Account",
                 style: TextStyle(
                     fontSize: 17,
-                    color: Color.fromARGB(255, 255, 109, 64),
+                    color: Colors.red,
                     fontWeight: FontWeight.bold),
               ),
             ]

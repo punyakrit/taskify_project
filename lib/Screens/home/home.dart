@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:taskify_project/Screens/home/description.dart';
 
@@ -49,12 +50,11 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         title: Row(children: [
           SizedBox(width: 10),
-          RichText(
-              text: TextSpan(
-            text: "All Task's",
-            style: TextStyle(
-                fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
-          )),
+          Text("All Task's",
+              style: GoogleFonts.poppins(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 35)),
         ]),
         actions: [
           Container(
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             child: IconButton(
               icon: Icon(
                 Icons.login,
-                color: Colors.black,
+                color: Colors.red,
                 size: 40,
               ),
               onPressed: () {
@@ -88,6 +88,23 @@ class _HomePageState extends State<HomePage> {
                 return Container(
                   height: 90,
                   child: Center(child: const CircularProgressIndicator()),
+                );
+              }
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Container(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 100),
+                        Image.asset("assets/no_data.jpg"),
+                        Text('No Data Found',
+                            style: GoogleFonts.poppins(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 19)),
+                      ],
+                    ),
+                  ),
                 );
               }
 
@@ -160,7 +177,6 @@ class _HomePageState extends State<HomePage> {
                                   snackBarType: FancySnackBarType.info,
                                   title: "Task Deleted",
                                   message: "",
-                                  
                                   duration: 4,
                                 );
                               },
