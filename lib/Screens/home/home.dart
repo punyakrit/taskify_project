@@ -54,11 +54,11 @@ class _HomePageState extends State<HomePage> {
               style: GoogleFonts.poppins(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
-                  fontSize: 35)),
+                  fontSize: 38)),
         ]),
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 15),
+            margin: EdgeInsets.only(right: 20),
             child: IconButton(
               icon: Icon(
                 Icons.login,
@@ -66,7 +66,17 @@ class _HomePageState extends State<HomePage> {
                 size: 40,
               ),
               onPressed: () {
-                FirebaseAuth.instance.signOut();
+                FancySnackbar.showSnackbar(
+                  context,
+                  snackBarType: FancySnackBarType.success,
+                  title: "Successfully Logged Out",
+                  message: "",
+                  duration: 4,
+                );
+                new Future.delayed(const Duration(seconds: 0), () {
+                  FirebaseAuth.instance.signOut();
+                }
+                );
               },
             ),
           ),

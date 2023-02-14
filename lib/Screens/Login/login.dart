@@ -157,8 +157,7 @@ class _LoginState extends State<Login> {
                 GestureDetector(
                   child: Text(
                     'Forgot your Password?',
-                    style: TextStyle(
-                        fontSize: 15, color: Color.fromARGB(96, 255, 109, 64)),
+                    style: TextStyle(fontSize: 15, color: Colors.red),
                   ),
                   onTap: () {
                     Navigator.push(context,
@@ -209,9 +208,7 @@ class _LoginState extends State<Login> {
                     color: Colors.red,
                     fontWeight: FontWeight.bold),
               ),
-            ]
-            )
-            ),
+            ])),
       ]),
     );
   }
@@ -228,28 +225,26 @@ class _LoginState extends State<Login> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
-          // ignore: use_build_context_synchronously
-          FancySnackbar.showSnackbar(
-  context,
-  snackBarType: FancySnackBarType.success,
-  title: "Login Successful",
-  message: "",
-  duration: 4,
-  
-);
+      // ignore: use_build_context_synchronously
+      FancySnackbar.showSnackbar(
+        context,
+        snackBarType: FancySnackBarType.success,
+        title: "Login Successful",
+        message: "",
+        duration: 4,
+      );
     } on FirebaseAuthException catch (e) {
       // var snackbar = Get.snackbar("Error", "Something went Wrong. Try again",
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.orangeAccent.withOpacity(0.5));
 
-          FancySnackbar.showSnackbar(
-  context,
-  snackBarType: FancySnackBarType.error,
-  title: "Error",
-  message: "Something went Wrong. Try again",
-  duration: 4,
-  
-);
+      FancySnackbar.showSnackbar(
+        context,
+        snackBarType: FancySnackBarType.error,
+        title: "Error",
+        message: "Something went Wrong. Try again",
+        duration: 4,
+      );
       print(e);
     }
     Navigator.of(context).pop();
