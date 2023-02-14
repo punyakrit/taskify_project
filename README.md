@@ -1,16 +1,11 @@
-# taskify_project
+# Taskify
 
-A new Flutter project.
+This app is designed to help you keep track of your tasks and to-do lists in a simple and organized manner. Here's how to use it:
 
-## Getting Started
+Adding tasks: To add a new task, simply click on the "Add Task" button and enter the task name and any relevant details. You can also assign a due date and time if you wish.
 
-This project is a starting point for a Flutter application.
+Viewing tasks: To View a task, click on the task name to open the task details page. From here, you can read the task name, details or due date.
 
-A few resources to get you started if this is your first Flutter project:
+Deleting tasks: To delete a task, click on the task name  and then click the Delete Task icon button.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+We hope this app helps you stay organized and on top of your tasks. Happy task managing!
