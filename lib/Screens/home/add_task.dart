@@ -53,7 +53,7 @@ class _AddTaskState extends State<AddTask> {
       message: "Task Updated Successfully",
       duration: 4,
     );
-    new Future.delayed(const Duration(seconds: 1), () {
+    new Future.delayed(const Duration(seconds: 0), () {
       Navigator.pop(context);
     }
     );
@@ -71,7 +71,11 @@ class _AddTaskState extends State<AddTask> {
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: SingleChildScrollView(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, 
+        children: [
+        SizedBox(height: 180,),
           Container(
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -113,7 +117,8 @@ class _AddTaskState extends State<AddTask> {
                 ]),
             child: TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              
+                maxLines: null,
+
               controller: descriptionController,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
@@ -156,6 +161,6 @@ class _AddTaskState extends State<AddTask> {
           ),
         ]),
       ),
-    );
+    ));
   }
 }

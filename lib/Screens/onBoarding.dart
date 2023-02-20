@@ -83,7 +83,8 @@ class Onboarding extends StatelessWidget {
       );
     } else {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => StreamBuilder<User?>(
+          builder: (context) => 
+          StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -95,7 +96,10 @@ class Onboarding extends StatelessWidget {
                 } else {
                   return Login();
                 }
-              })));
+              }
+              )
+              )
+              );
 
       // print("nextButton pressed");
     }
