@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class Description extends StatelessWidget {
+import '../../service/ad_mob.dart';
+
+class Description extends StatefulWidget {
   final String title, description;
 
   const Description({Key? key, required this.title, required this.description})
       : super(key: key);
+
+  @override
+  State<Description> createState() => _DescriptionState();
+}
+
+class _DescriptionState extends State<Description> {
+  BannerAd? _banner;
+
+  @override
+  void initState() {
+    super.initState();
+    _createBannerAd();
+  }
+
+  void _createBannerAd() {
+    _banner = BannerAd(
+        size: AdSize.fullBanner,
+         adUnitId: AdMobService.bannerAdUnitId,
+          listener: AdMobService.bannerListner,
+           request: const AdRequest()
+           ) ..load();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +48,7 @@ class Description extends StatelessWidget {
                 Container(decoration: BoxDecoration(),
                   margin: EdgeInsets.all(10),
                   child: Text(
-                    title,
+                    widget.title,
                     style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold
@@ -32,7 +58,7 @@ class Description extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Text(
-                    description,
+                    widget.description,
                     style: TextStyle(
                     fontSize: 20
                     ),
@@ -43,6 +69,13 @@ class Description extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: _banner == null
+            ? Container()
+            : Container(
+                margin: const EdgeInsets.only(bottom: 5),
+                height: 52,
+                child: AdWidget(ad: _banner!),
+              ),
     );
   }
 }
