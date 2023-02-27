@@ -183,7 +183,7 @@ class _AddTaskState extends State<AddTask> {
         bottomNavigationBar: _banner == null
             ? Container()
             : Container(
-                margin: const EdgeInsets.only(bottom: 5),
+                margin: const EdgeInsets.only(bottom: 12),
                 height: 52,
                 child: AdWidget(ad: _banner!),
               ),

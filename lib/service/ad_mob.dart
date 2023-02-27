@@ -6,7 +6,15 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class AdMobService {
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {
-      return "ca-app-pub-1567175925424561/1176193139;";
+      return "ca-app-pub-1567175925424561/1176193139";
+    } else {
+      throw UnsupportedError("Unsupported platform");
+    }
+  }
+
+static String get interstitialAdUnitId {
+    if (Platform.isAndroid) {
+      return "ca-app-pub-1567175925424561/1069231988";
     } else {
       throw UnsupportedError("Unsupported platform");
     }

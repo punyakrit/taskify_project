@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_snackbar/fancy_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,8 +7,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:taskify_project/Screens/home/description.dart';
+import 'package:taskify_project/service/ad_mob.dart';
 
 import 'add_task.dart';
 
@@ -20,12 +24,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  InterstitialAd? _interstitialAd;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   var uid;
   @override
   void initState() {
     uid = getuid();
     super.initState();
+    _createInterstitialAd();
   }
 
   String getuid() {
@@ -34,6 +41,32 @@ class _HomePageState extends State<HomePage> {
     return (uid);
 
     // here you write the codes to input the data into firestore
+  }
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdMobService.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (ad) => _interstitialAd = ad,
+            onAdFailedToLoad: (LoadAdError error) => _interstitialAd = null));
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          _createInterstitialAd();
+        },
+      );
+      _interstitialAd!.show();
+      _interstitialAd = null;
+    }
   }
 
   @override
@@ -66,6 +99,7 @@ class _HomePageState extends State<HomePage> {
                 size: 40,
               ),
               onPressed: () {
+                _showInterstitialAd;
                 FancySnackbar.showSnackbar(
                   context,
                   snackBarType: FancySnackBarType.success,
@@ -73,10 +107,9 @@ class _HomePageState extends State<HomePage> {
                   message: "",
                   duration: 4,
                 );
-                new Future.delayed(const Duration(seconds: 0), () {
+                new Future.delayed(const Duration(seconds: 1), () {
                   FirebaseAuth.instance.signOut();
-                }
-                );
+                });
               },
             ),
           ),
